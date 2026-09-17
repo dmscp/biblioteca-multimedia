@@ -1,8 +1,5 @@
 package model;
 
-/**
- * Recurso de tipo película. Datos propios: director y duración (en minutos).
- */
 public class Pelicula extends Recurso {
 
     private String director;

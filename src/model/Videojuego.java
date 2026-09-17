@@ -1,8 +1,5 @@
 package model;
 
-/**
- * Recurso de tipo videojuego. Datos propios: plataforma y clasificación PEGI.
- */
 public class Videojuego extends Recurso {
 
     private String plataforma;

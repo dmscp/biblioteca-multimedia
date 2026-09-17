@@ -1,8 +1,5 @@
 package model;
 
-/**
- * Recurso de tipo libro. Datos propios: autor y número de páginas.
- */
 public class Libro extends Recurso {
 
     private String autor;
