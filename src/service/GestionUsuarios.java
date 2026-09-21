@@ -18,10 +18,10 @@ public class GestionUsuarios {
     }
 
     // 1. C - CREAR (Comprueba duplicados antes de insertar)
-    public void crearUsuario(Usuario nuevoUsuario) throws UsuarioDuplicadoException {
+    public void crearUsuario(Usuario nuevoUsuario) throws ExcepcionesUsuarios.UsuarioDuplicadoException {
         for (Usuario u : listaUsuarios) {
             if (u.getId().equalsIgnoreCase(nuevoUsuario.getId())) {
-                throw new UsuarioDuplicadoException("Error: Ya existe un usuario con el ID '" + nuevoUsuario.getId() + "'.");
+                throw new ExcepcionesUsuarios.UsuarioDuplicadoException("Error: Ya existe un usuario con el ID '" + nuevoUsuario.getId() + "'.");
             }
         }
         listaUsuarios.add(nuevoUsuario);
@@ -40,17 +40,17 @@ public class GestionUsuarios {
     }
 
     // 3. R - LEER / BUSCAR POR ID
-    public Usuario buscarUsuarioPorId(String id) throws UsuarioNoEncontradoException {
+    public Usuario buscarUsuarioPorId(String id) throws ExcepcionesUsuarios.UsuarioNoEncontradoException {
         for (Usuario u : listaUsuarios) {
             if (u.getId().equalsIgnoreCase(id)) {
                 return u;
             }
         }
-        throw new UsuarioNoEncontradoException("Error: El usuario con ID '" + id + "' no existe.");
+        throw new ExcepcionesUsuarios.UsuarioNoEncontradoException("Error: El usuario con ID '" + id + "' no existe.");
     }
 
     // 4. U - MODIFICAR
-    public void modificarUsuario(String id, String nuevoNombre, String nuevoCorreo) throws UsuarioNoEncontradoException {
+    public void modificarUsuario(String id, String nuevoNombre, String nuevoCorreo) throws ExcepcionesUsuarios.UsuarioNoEncontradoException {
         // Reutilizamos el buscador; si no lo encuentra, lanza la excepción automáticamente
         Usuario usuario = buscarUsuarioPorId(id); 
         usuario.setNombre(nuevoNombre);
@@ -58,9 +58,10 @@ public class GestionUsuarios {
     }
 
     // 5. D - ELIMINAR
-    public void eliminarUsuario(String id) throws UsuarioNoEncontradoException {
+    public void eliminarUsuario(String id) throws ExcepcionesUsuarios.UsuarioNoEncontradoException {
         Usuario usuario = buscarUsuarioPorId(id);
         listaUsuarios.remove(usuario);
     }
 }
+
 
