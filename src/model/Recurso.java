@@ -1,4 +1,4 @@
-package modelo;
+package model;
  
 public abstract class Recurso {
  
@@ -47,9 +47,9 @@ public abstract class Recurso {
     }
  
     public abstract String getDetallesEspecificos();
- 
-    @Override
-    public String toString() {
-        return String.format("[%s] %s (%d) - Estado: %s | %s",
-                identificador, titulo, anio, estado, getDetallesEspecificos());
-    }
+    
+ @Override
+public String toString() {
+    return "[" + identificador + "] " + titulo + " (" + anio + ") - Estado: " + estado + " | " + getDetallesEspecificos();
+ }
+}

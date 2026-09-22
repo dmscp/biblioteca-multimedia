@@ -27,8 +27,8 @@ public class Libro extends Recurso {
         this.paginas = paginas;
     }
 
-    @Override
-    public String getDetallesEspecificos() {
-        return String.format("Autor: %s, Páginas: %d", autor, paginas);
-    }
+   @Override
+public String getDetallesEspecificos() {
+    return "Autor: " + autor + ", Páginas: " + paginas;
+}
 }

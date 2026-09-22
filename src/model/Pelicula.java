@@ -27,8 +27,8 @@ public class Pelicula extends Recurso {
         this.duracionMinutos = duracionMinutos;
     }
 
-    @Override
-    public String getDetallesEspecificos() {
-        return String.format("Director: %s, Duración: %d min", director, duracionMinutos);
-    }
+   @Override
+public String getDetallesEspecificos() {
+    return "Director: " + director + ", Duración: " + duracionMinutos + " min";
+}
 }

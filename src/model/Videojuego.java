@@ -27,8 +27,8 @@ public class Videojuego extends Recurso {
         this.pegi = pegi;
     }
 
-    @Override
-    public String getDetallesEspecificos() {
-        return String.format("Plataforma: %s, PEGI: %d", plataforma, pegi);
-    }
+   @Override
+public String getDetallesEspecificos() {
+    return "Plataforma: " + plataforma + ", PEGI: " + pegi;
+}
 }
