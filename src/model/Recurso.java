@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 public abstract class Recurso {
 
 	private final String identificador;
@@ -20,6 +22,23 @@ public abstract class Recurso {
 
 	public String getTitulo() {
 		return titulo;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(identificador);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Recurso other = (Recurso) obj;
+		return Objects.equals(identificador, other.identificador);
 	}
 
 	public void setTitulo(String titulo) {
