@@ -4,6 +4,9 @@ import model.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 
+import exceptions.UsuarioDuplicadoException;
+import exceptions.UsuarioNoEncontradoException;
+
 public class GestionUsuarios {
     // Colección para almacenar los usuarios en memoria durante la ejecución
     private List<Usuario> listaUsuarios;
@@ -18,10 +21,10 @@ public class GestionUsuarios {
     }
 
     // 1. C - CREAR (Comprueba duplicados antes de insertar)
-    public void crearUsuario(Usuario nuevoUsuario) throws ExcepcionesUsuarios.UsuarioDuplicadoException {
+    public void crearUsuario(Usuario nuevoUsuario) {
         for (Usuario u : listaUsuarios) {
             if (u.getId().equalsIgnoreCase(nuevoUsuario.getId())) {
-                throw new ExcepcionesUsuarios.UsuarioDuplicadoException("Error: Ya existe un usuario con el ID '" + nuevoUsuario.getId() + "'.");
+                throw new UsuarioDuplicadoException("Error: Ya existe un usuario con el ID '" + nuevoUsuario.getId() + "'.");
             }
         }
         listaUsuarios.add(nuevoUsuario);
@@ -40,17 +43,17 @@ public class GestionUsuarios {
     }
 
     // 3. R - LEER / BUSCAR POR ID
-    public Usuario buscarUsuarioPorId(String id) throws ExcepcionesUsuarios.UsuarioNoEncontradoException {
+    public Usuario buscarUsuarioPorId(String id) {
         for (Usuario u : listaUsuarios) {
             if (u.getId().equalsIgnoreCase(id)) {
                 return u;
             }
         }
-        throw new ExcepcionesUsuarios.UsuarioNoEncontradoException("Error: El usuario con ID '" + id + "' no existe.");
+        throw new UsuarioNoEncontradoException("Error: El usuario con ID '" + id + "' no existe.");
     }
 
     // 4. U - MODIFICAR
-    public void modificarUsuario(String id, String nuevoNombre, String nuevoCorreo) throws ExcepcionesUsuarios.UsuarioNoEncontradoException {
+    public void modificarUsuario(String id, String nuevoNombre, String nuevoCorreo) {
         // Reutilizamos el buscador; si no lo encuentra, lanza la excepción automáticamente
         Usuario usuario = buscarUsuarioPorId(id); 
         usuario.setNombre(nuevoNombre);
@@ -58,7 +61,7 @@ public class GestionUsuarios {
     }
 
     // 5. D - ELIMINAR
-    public void eliminarUsuario(String id) throws ExcepcionesUsuarios.UsuarioNoEncontradoException {
+    public void eliminarUsuario(String id)  {
         Usuario usuario = buscarUsuarioPorId(id);
         listaUsuarios.remove(usuario);
     }

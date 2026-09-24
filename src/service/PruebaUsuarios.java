@@ -1,8 +1,8 @@
 package service;
 
 import model.Usuario;
-import service.ExcepcionesUsuarios.UsuarioDuplicadoException;
-import service.ExcepcionesUsuarios.UsuarioNoEncontradoException;
+import exceptions.UsuarioDuplicadoException;
+import exceptions.UsuarioNoEncontradoException;
 
 import java.util.Scanner;
 
@@ -76,7 +76,7 @@ public class PruebaUsuarios {
                 }
             } catch (NumberFormatException e) {
                 System.out.println("⚠️ Error: Por favor, introduce un número válido.");
-            } catch (ExcepcionesUsuarios.UsuarioDuplicadoException | ExcepcionesUsuarios.UsuarioNoEncontradoException e) {
+            } catch (UsuarioDuplicadoException | UsuarioNoEncontradoException e) {
                 System.out.println(e.getMessage()); // Muestra el mensaje limpio de tu excepción
             }
         } while (opcion != 6);
