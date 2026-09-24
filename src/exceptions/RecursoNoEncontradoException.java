@@ -1,4 +1,4 @@
-package service.exceptions;
+package exceptions;
 
 public class RecursoNoEncontradoException extends Exception {
 

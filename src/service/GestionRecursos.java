@@ -3,9 +3,14 @@ package service;
 import java.util.ArrayList;
 import java.util.List;
 
+import exceptions.DuplicadoRecursoException;
+import exceptions.RecursoNoEncontradoException;
+import exceptions.RecursoTipoInvalidoExcepcion;
+import model.EstadoRecurso;
+import model.Libro;
+import model.Pelicula;
 import model.Recurso;
-import service.exceptions.DuplicadoRecursoException;
-import service.exceptions.RecursoNoEncontradoException;
+import model.Videojuego;
 
 public class GestionRecursos {
 	
@@ -26,7 +31,7 @@ public class GestionRecursos {
     	
         try {
         	// Comprobar que el recurso no exista previamente por identificador
-			Recurso r = buscarRecursoPorIdentificador(recurso.getIdentificador());
+			buscarRecursoPorIdentificador(recurso.getIdentificador());
 			// el metodo buscar recurso por identificar lanza excepcion en caso de no encontrarlo.
 			// si llega aqui, es porque el recurso existe....
 			
@@ -73,8 +78,50 @@ public class GestionRecursos {
 			throw e;
 		}
     }
-    
-    // TO-DO:
+
     // Modificar
+    public void modificarLibro(String identificador, String titulo, int anio, String autor, int paginas) throws RecursoNoEncontradoException, RecursoTipoInvalidoExcepcion {
+    	Recurso r = buscarRecursoPorIdentificador(identificador);
+    	if (r instanceof Libro) {
+    		r.setTitulo(titulo);
+    		r.setAnio(anio);
+    		((Libro) r).setAutor(autor);
+    		((Libro) r).setPaginas(paginas);
+    	}
+    	else {
+    		throw new RecursoTipoInvalidoExcepcion("Error: El recurso a modificar no es un libro");
+    	}
+    }
+    
+    public void modificarPelicula(String identificador, String titulo, int anio, String director, int duracionMinutos) throws RecursoNoEncontradoException, RecursoTipoInvalidoExcepcion {
+    	Recurso r = buscarRecursoPorIdentificador(identificador);
+    	if (r instanceof Pelicula) {
+    		r.setTitulo(titulo);
+    		r.setAnio(anio);
+    		((Pelicula) r).setDirector(director);
+    		((Pelicula) r).setDuracionMinutos(duracionMinutos);
+    	}
+    	else {
+    		throw new RecursoTipoInvalidoExcepcion("Error: El recurso a modificar no es una pelicula");
+    	}
+    }
+    
+    public void modificarVideojuego(String identificador, String titulo, int anio, String plataforma, int pegi) throws RecursoNoEncontradoException, RecursoTipoInvalidoExcepcion {
+    	Recurso r = buscarRecursoPorIdentificador(identificador);
+    	if (r instanceof Videojuego) {
+    		r.setTitulo(titulo);
+    		r.setAnio(anio);
+    		((Videojuego) r).setPlataforma(plataforma);
+    		((Videojuego) r).setPegi(pegi);
+    	}
+    	else {
+    		throw new RecursoTipoInvalidoExcepcion("Error: El recurso a modificar no es una pelicula");
+    	}
+    }
+    
     // Consultar si un recurso esta disponible o no
+    public EstadoRecurso obtenerEstadoRecurso(String identificador) throws RecursoNoEncontradoException {
+    	Recurso r = this.buscarRecursoPorIdentificador(identificador);
+    	return r.getEstado();
+    }
 }
