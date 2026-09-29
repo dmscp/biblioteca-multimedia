@@ -1,6 +1,7 @@
 package model;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public abstract class Recurso {
 
@@ -9,6 +10,15 @@ public abstract class Recurso {
 	private int anio;
 	private EstadoRecurso estado;
 
+	// CONSTRUCTOR PRINCIPAL: Para recursos nuevos (Genera el ID solo)
+	protected Recurso(String titulo, int anio) {
+		this.identificador = UUID.randomUUID().toString();
+		this.titulo = titulo;
+		this.anio = anio;
+		this.estado = EstadoRecurso.DISPONIBLE;
+	}
+
+	// CONSTRUCTOR DE PERSISTENCIA: Usado por el CSV para mantener el ID original
 	protected Recurso(String identificador, String titulo, int anio) {
 		this.identificador = identificador;
 		this.titulo = titulo;
@@ -16,60 +26,30 @@ public abstract class Recurso {
 		this.estado = EstadoRecurso.DISPONIBLE;
 	}
 
-	public String getIdentificador() {
-		return identificador;
-	}
-
-	public String getTitulo() {
-		return titulo;
-	}
+	public String getIdentificador() { return identificador; }
+	public String getTitulo() { return titulo; }
+	public void setTitulo(String titulo) { this.titulo = titulo; }
+	public int getAnio() { return anio; }
+	public void setAnio(int anio) { this.anio = anio; }
+	public EstadoRecurso getEstado() { return estado; }
+	public void setEstado(EstadoRecurso estado) { this.estado = estado; }
+	public boolean estaDisponible() { return estado == EstadoRecurso.DISPONIBLE; }
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(identificador);
-	}
+	public int hashCode() { return Objects.hash(identificador); }
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		if (this == obj) return true;
+		if (obj == null || getClass() != obj.getClass()) return false;
 		Recurso other = (Recurso) obj;
 		return Objects.equals(identificador, other.identificador);
-	}
-
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
-
-	public int getAnio() {
-		return anio;
-	}
-
-	public void setAnio(int anio) {
-		this.anio = anio;
-	}
-
-	public EstadoRecurso getEstado() {
-		return estado;
-	}
-
-	public void setEstado(EstadoRecurso estado) {
-		this.estado = estado;
-	}
-
-	public boolean estaDisponible() {
-		return estado == EstadoRecurso.DISPONIBLE;
 	}
 
 	public abstract String getDetallesEspecificos();
 
 	@Override
 	public String toString() {
-		return "[" + identificador + "] " + titulo + " (" + anio + ") - Estado: " + estado + " | "
-				+ getDetallesEspecificos();
+		return "[" + identificador + "] " + titulo + " (" + anio + ") - Estado: " + estado + " | " + getDetallesEspecificos();
 	}
 }

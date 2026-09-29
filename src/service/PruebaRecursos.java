@@ -37,8 +37,6 @@ public class PruebaRecursos {
 
                 switch (opcion) {
                     case 1:
-                        System.out.print("Introduce ID: ");
-                        String idLibro = scanner.nextLine();
                         System.out.print("Introduce Título: ");
                         String tituloLibro = scanner.nextLine();
                         System.out.print("Introduce Año: ");
@@ -48,13 +46,11 @@ public class PruebaRecursos {
                         System.out.print("Introduce Páginas: ");
                         int paginas = Integer.parseInt(scanner.nextLine());
 
-                        gestor.crearRecurso(new Libro(idLibro, tituloLibro, anioLibro, autor, paginas));
+                        gestor.crearRecurso(new Libro(tituloLibro, anioLibro, autor, paginas));
                         System.out.println("Libro creado con éxito.");
                         break;
 
                     case 2:
-                        System.out.print("Introduce ID: ");
-                        String idPelicula = scanner.nextLine();
                         System.out.print("Introduce Título: ");
                         String tituloPelicula = scanner.nextLine();
                         System.out.print("Introduce Año: ");
@@ -64,13 +60,11 @@ public class PruebaRecursos {
                         System.out.print("Introduce Duración (minutos): ");
                         int duracion = Integer.parseInt(scanner.nextLine());
 
-                        gestor.crearRecurso(new Pelicula(idPelicula, tituloPelicula, anioPelicula, director, duracion));
+                        gestor.crearRecurso(new Pelicula(tituloPelicula, anioPelicula, director, duracion));
                         System.out.println("Película creada con éxito.");
                         break;
 
                     case 3:
-                        System.out.print("Introduce ID: ");
-                        String idVideojuego = scanner.nextLine();
                         System.out.print("Introduce Título: ");
                         String tituloVideojuego = scanner.nextLine();
                         System.out.print("Introduce Año: ");
@@ -80,7 +74,7 @@ public class PruebaRecursos {
                         System.out.print("Introduce PEGI: ");
                         int pegi = Integer.parseInt(scanner.nextLine());
 
-                        gestor.crearRecurso(new Videojuego(idVideojuego, tituloVideojuego, anioVideojuego, plataforma, pegi));
+                        gestor.crearRecurso(new Videojuego(tituloVideojuego, anioVideojuego, plataforma, pegi));
                         System.out.println("Videojuego creado con éxito.");
                         break;
 
