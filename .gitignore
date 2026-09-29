@@ -35,3 +35,6 @@ build/
 .classpath
 .idea/
 *.iml
+
+# Archivos csv
+src/datos

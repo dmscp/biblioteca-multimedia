@@ -25,6 +25,10 @@ public class GestionRecursos {
     public List<Recurso> getListaRecursos() {
         return listaRecursos;
     }
+    
+    public void setListaRecursos(List<Recurso> listaRecursos) {
+        this.listaRecursos = listaRecursos;
+    }
 
     // CREAR (Comprueba duplicados antes de insertar)
     public void crearRecurso(Recurso recurso) throws DuplicadoRecursoException {

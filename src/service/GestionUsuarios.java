@@ -19,6 +19,10 @@ public class GestionUsuarios {
     public List<Usuario> getListaUsuarios() {
         return listaUsuarios;
     }
+    
+    public void setListaUsuarios(List<Usuario> listaUsuarios) {
+        this.listaUsuarios = listaUsuarios;
+    }
 
     // 1. C - CREAR (Comprueba duplicados antes de insertar)
     public void crearUsuario(Usuario nuevoUsuario) {
