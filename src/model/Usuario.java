@@ -1,20 +1,20 @@
 package model;
 
 public class Usuario {
-    private String id;
+    private int id;
     private String nombre;
     private String correoElectronico;
 
     // Constructor completo
-    public Usuario(String id, String nombre, String correoElectronico) {
+    public Usuario(int id, String nombre, String correoElectronico) {
         this.id = id;
         this.nombre = nombre;
         this.correoElectronico = correoElectronico;
     }
 
     // Getters y Setters
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }

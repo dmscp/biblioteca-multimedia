@@ -22,6 +22,7 @@ public class Main {
             System.out.println("\n=== MENÚ PRINCIPAL ===");
             System.out.println("1. Gestión de Usuarios");
             System.out.println("2. Gestión de Recursos");
+            System.out.println("3. Gestión de Préstamos");
             System.out.println("3. Salir");
             System.out.print("Selecciona una opción: ");
 

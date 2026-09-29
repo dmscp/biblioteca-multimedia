@@ -3,14 +3,14 @@ package model;
 import java.time.LocalDate;
 
 public class Prestamo {
-    private String idPrestamo;
+    private int idPrestamo;
     private Usuario usuario;
     private Recurso recurso;
     private LocalDate fechaPrestamo;
     private LocalDate fechaDevolucion; 
     private boolean activo;
 
-    public Prestamo(String idPrestamo, Usuario usuario, Recurso recurso) {
+    public Prestamo(int idPrestamo, Usuario usuario, Recurso recurso) {
         this.idPrestamo = idPrestamo;
         this.usuario = usuario;
         this.recurso = recurso;
@@ -19,17 +19,13 @@ public class Prestamo {
         this.activo = true;
     }
 
-    public void registrarDevolucion() {
-        this.fechaDevolucion = LocalDate.now();
-        this.activo = false;
-    }
-
+    
     // Getters y Setters
-    public String getIdPrestamo() {
+    public int getIdPrestamo() {
         return idPrestamo;
     }
 
-    public void setIdPrestamo(String idPrestamo) {
+    public void setIdPrestamo(int idPrestamo) {
         this.idPrestamo = idPrestamo;
     }
 
@@ -64,6 +60,13 @@ public class Prestamo {
     public void setFechaDevolucion(LocalDate fechaDevolucion) {
         this.fechaDevolucion = fechaDevolucion;
     }
+    
+    
+    
+    public void registrarDevolucion() {
+        this.fechaDevolucion = LocalDate.now();
+        this.activo = false;
+    }
 
     public boolean isActivo() {
         return activo;
@@ -77,6 +80,6 @@ public class Prestamo {
     public String toString() {
         String estado = activo ? "ACTIVO" : "DEVUELTO (" + fechaDevolucion + ")";
         return "Préstamo [ID=" + idPrestamo + " | Usuario=" + usuario.getId() 
-                + " | Recurso=" + recurso.getId() + " | Fecha=" + fechaPrestamo + " | Estado=" + estado + "]";
+                + " | Recurso=" + recurso.getIdentificador() + " | Fecha=" + fechaPrestamo + " | Estado=" + estado + "]";
     }
 }
