@@ -2,16 +2,18 @@ package service;
 
 import model.*;
 import java.io.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PersistenciaCSV {
     private static final String ARCHIVO_USUARIOS = "src/datos/usuarios.csv";
     private static final String ARCHIVO_RECURSOS = "src/datos/recursos.csv";
+    private static final String ARCHIVO_PRESTAMOS = "src/datos/prestamos.csv";
     private static final String SEPARADOR = ";";
 
     // ==========================================
-    //          PERSISTENCIA DE USUARIOS
+    //           PERSISTENCIA DE USUARIOS
     // ==========================================
 
     public static void guardarUsuarios(List<Usuario> usuarios) {
@@ -47,7 +49,7 @@ public class PersistenciaCSV {
     }
 
     // ==========================================
-    //          PERSISTENCIA DE RECURSOS
+    //           PERSISTENCIA DE RECURSOS
     // ==========================================
 
     public static void guardarRecursos(List<Recurso> recursos) {
@@ -124,5 +126,81 @@ public class PersistenciaCSV {
         }
         return recursos;
     }
-}
 
+    // ==========================================
+    //          PERSISTENCIA DE PRÉSTAMOS
+    // ==========================================
+
+    public static void guardarPrestamos(List<Prestamo> prestamos) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARCHIVO_PRESTAMOS))) {
+            for (Prestamo p : prestamos) {
+                String fDevolucion = (p.getFechaDevolucion() != null) ? p.getFechaDevolucion().toString() : "null";
+                
+                // Estructura: idPrestamo;idUsuario;idRecurso;fechaPrestamo;fechaDevolucion;activo
+                String linea = p.getIdPrestamo() + SEPARADOR +
+                               p.getUsuario().getId() + SEPARADOR +
+                               p.getRecurso().getIdentificador() + SEPARADOR +
+                               p.getFechaPrestamo() + SEPARADOR +
+                               fDevolucion + SEPARADOR +
+                               p.isActivo();
+                bw.write(linea);
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            System.err.println("Error al guardar préstamos: " + e.getMessage());
+        }
+    }
+
+    public static List<Prestamo> cargarPrestamos() {
+        return new ArrayList<>();
+    }
+
+    public static List<Prestamo> cargarPrestamos(List<Usuario> usuarios, List<Recurso> recursos) {
+        List<Prestamo> prestamos = new ArrayList<>();
+        File file = new File(ARCHIVO_PRESTAMOS);
+        if (!file.exists()) return prestamos;
+
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] datos = linea.split(SEPARADOR);
+                if (datos.length < 6) continue;
+
+                int idPrestamo = Integer.parseInt(datos[0]);
+                String idUsuario = datos[1];
+                String idRecurso = datos[2];
+                LocalDate fechaPrestamo = LocalDate.parse(datos[3]);
+                String strFechaDev = datos[4];
+                boolean activo = Boolean.parseBoolean(datos[5]);
+
+                // Busqueda de las referencias de usuario y recurso en las listas cargadas
+                Usuario usuarioObj = usuarios.stream()
+                        .filter(u -> u.getId().equalsIgnoreCase(idUsuario))
+                        .findFirst().orElse(null);
+
+                Recurso recursoObj = recursos.stream()
+                        .filter(r -> r.getIdentificador().equalsIgnoreCase(idRecurso))
+                        .findFirst().orElse(null);
+
+                if (usuarioObj != null && recursoObj != null) {
+                    Prestamo p = new Prestamo(idPrestamo, usuarioObj, recursoObj);
+                    p.setFechaPrestamo(fechaPrestamo);
+                    if (!strFechaDev.equals("null")) {
+                        p.setFechaDevolucion(LocalDate.parse(strFechaDev));
+                    }
+                    p.setActivo(activo);
+                    
+                    // Si el préstamo sigue activo, actualizar el estado del recurso
+                    if (activo) {
+                        recursoObj.setEstado(EstadoRecurso.PRESTADO);
+                    }
+                    
+                    prestamos.add(p);
+                }
+            }
+        } catch (IOException | RuntimeException e) {
+            System.err.println("Error al cargar préstamos: " + e.getMessage());
+        }
+        return prestamos;
+    }
+}
