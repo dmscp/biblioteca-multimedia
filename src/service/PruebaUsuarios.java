@@ -26,14 +26,12 @@ public class PruebaUsuarios {
                 
                 switch (opcion) {
                     case 1:
-                        System.out.print("Introduce ID: ");
-                        String id = scanner.nextLine();
                         System.out.print("Introduce Nombre: ");
                         String nombre = scanner.nextLine();
                         System.out.print("Introduce Correo: ");
                         String correo = scanner.nextLine();
                         
-                        gestor.crearUsuario(new Usuario(id, nombre, correo));
+                        gestor.crearUsuario(new Usuario(nombre, correo));
                         System.out.println("✅ Usuario creado con éxito.");
                         break;
                         
