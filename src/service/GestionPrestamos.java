@@ -12,47 +12,39 @@ import java.util.List;
 
 public class GestionPrestamos {
     private List<Prestamo> prestamos;
-    private List<Usuario> usuarios;
-    private List<Recurso> recursos;
+    private GestionUsuarios gestionUsuarios;
+    private GestionRecursos gestionRecursos;
 
-    public GestionPrestamos(List<Usuario> usuarios, List<Recurso> recursos) {
+    public GestionPrestamos(GestionUsuarios gestionUsuarios, GestionRecursos gestionRecursos) {
         this.prestamos = new ArrayList<>();
-        this.usuarios = usuarios;
-        this.recursos = recursos;
+        this.gestionUsuarios = gestionUsuarios;
+        this.gestionRecursos = gestionRecursos;
     }
 
-    // ==========================================
-    // PRÉSTAMOS Y DEVOLUCIONES
-    // ==========================================
+    
+     //Registra un nuevo préstamo verificando existencia de usuario y recurso,
+      //comprobando que esté disponible y cambiando su estado.
 
-    /**
-     * Registra un nuevo préstamo comprobando la existencia de usuario y recurso,
-     * y actualizando la disponibilidad.
-     */
-    public Prestamo prestarRecurso(int idPrestamo, int idUsuario, String idRecurso) 
+    public Prestamo prestarRecurso(int idPrestamo, String idUsuario, String idRecurso) 
             throws UsuarioNoEncontradoException, RecursoNoEncontradoException, IllegalStateException {
 
-        // 1. Comprobar que el usuario existe
-        Usuario usuario = buscarUsuarioPorId(idUsuario);
-        if (usuario == null) {
-            throw new UsuarioNoEncontradoException("Error: El usuario con ID '" + idUsuario + "' no existe.");
-        }
+    	//Comprobaciones de que existen usuarios y recrsos
+        Usuario usuario = gestionUsuarios.buscarUsuarioPorId(idUsuario);
+        Recurso recurso = gestionRecursos.buscarRecursoPorIdentificador(idRecurso);
 
-        Recurso recurso = buscarRecursoPorId(idRecurso);
-        if (recurso == null) {
-            throw new RecursoNoEncontradoException("Error: El recurso con ID '" + idRecurso + "' no existe.");
-        }
-
+         //Comprobar que el recurso está disponible antes de prestarlo
         if (!recurso.estaDisponible()) {
             throw new IllegalStateException("Error: El recurso '" + recurso.getTitulo() + "' ya está prestado.");
         }
 
+        // Crear el nuevo préstamo
         Prestamo nuevoPrestamo = new Prestamo(idPrestamo, usuario, recurso);
         recurso.setEstado(EstadoRecurso.PRESTADO);
         prestamos.add(nuevoPrestamo);
         return nuevoPrestamo;
     }
 
+    //registrar la devo de un recurso.
     public boolean devolverRecurso(int idPrestamo) {
         Prestamo prestamo = buscarPrestamoActivoPorId(idPrestamo);
 
@@ -66,9 +58,10 @@ public class GestionPrestamos {
         return true;
     }
 
+    //consulta de recursos
     public List<Recurso> obtenerRecursosPorEstado(boolean disponible) {
         List<Recurso> resultado = new ArrayList<>();
-        for (Recurso r : recursos) {
+        for (Recurso r : gestionRecursos.getListaRecursos()) {
             if (r.estaDisponible() == disponible) {
                 resultado.add(r);
             }
@@ -76,7 +69,7 @@ public class GestionPrestamos {
         return resultado;
     }
 
-  
+    //consultade busqueda de prestamos por titulo
     public List<Prestamo> buscarPrestamosPorTitulo(String titulo) {
         List<Prestamo> resultado = new ArrayList<>();
         for (Prestamo p : prestamos) {
@@ -87,22 +80,21 @@ public class GestionPrestamos {
         return resultado;
     }
 
-    
-    public List<Prestamo> obtenerPrestamosDeUsuario(int idUsuario) throws UsuarioNoEncontradoException {
-        if (buscarUsuarioPorId(idUsuario) == null) {
-            throw new UsuarioNoEncontradoException("Error: El usuario con ID '" + idUsuario + "' no existe.");
-        }
+    //consulta de prestamos por usuario
+    public List<Prestamo> obtenerPrestamosDeUsuario(String idUsuario) throws UsuarioNoEncontradoException {
+        
+    	gestionUsuarios.buscarUsuarioPorId(idUsuario);
 
         List<Prestamo> resultado = new ArrayList<>();
         for (Prestamo p : prestamos) {
-            if (p.getUsuario().getId() == idUsuario) {
+            if (p.getUsuario().getId().equalsIgnoreCase(idUsuario)) {
                 resultado.add(p);
             }
         }
         return resultado;
     }
 
-
+    //consulta de prestamos activos
     public List<Prestamo> obtenerPrestamosActivos() {
         List<Prestamo> activos = new ArrayList<>();
         for (Prestamo p : prestamos) {
@@ -113,17 +105,7 @@ public class GestionPrestamos {
         return activos;
     }
 
-
-    private Usuario buscarUsuarioPorId(int idUsuario) {
-        for (Usuario u : usuarios) {
-            if (u.getId() == idUsuario) {
-                return u;
-            }
-        }
-        return null;
-    }
-
-
+    //metodos auxiliares para busqueda de prestamos activos por id
     private Prestamo buscarPrestamoActivoPorId(int idPrestamo) {
         for (Prestamo p : prestamos) {
             if (p.getIdPrestamo() == idPrestamo && p.isActivo()) {
