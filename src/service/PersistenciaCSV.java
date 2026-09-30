@@ -17,6 +17,15 @@ public class PersistenciaCSV {
     // ==========================================
 
     public static void guardarUsuarios(List<Usuario> usuarios) {
+    	
+    	File file = new File(ARCHIVO_USUARIOS);
+    	
+    	// Crear las carpetas padres si no existen
+    	File parent = file.getParentFile();
+    	if (parent != null && !parent.exists()) {
+    		parent.mkdirs();
+    	}
+    	
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARCHIVO_USUARIOS))) {
             for (Usuario u : usuarios) {
                 String linea = u.getId() + SEPARADOR + u.getNombre() + SEPARADOR + u.getCorreoElectronico();
@@ -53,6 +62,15 @@ public class PersistenciaCSV {
     // ==========================================
 
     public static void guardarRecursos(List<Recurso> recursos) {
+    	
+    	File file = new File(ARCHIVO_RECURSOS);
+    	
+    	// Crear las carpetas padres si no existen
+    	File parent = file.getParentFile();
+    	if (parent != null && !parent.exists()) {
+    		parent.mkdirs();
+    	}
+    	
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARCHIVO_RECURSOS))) {
             for (Recurso r : recursos) {
                 String tipo = "";
@@ -132,7 +150,16 @@ public class PersistenciaCSV {
     // ==========================================
 
     public static void guardarPrestamos(List<Prestamo> prestamos) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARCHIVO_PRESTAMOS))) {
+        
+    	File file = new File(ARCHIVO_PRESTAMOS);
+    	
+    	// Crear las carpetas padres si no existen
+    	File parent = file.getParentFile();
+    	if (parent != null && !parent.exists()) {
+    		parent.mkdirs();
+    	}
+    	
+    	try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARCHIVO_PRESTAMOS))) {
             for (Prestamo p : prestamos) {
                 String fDevolucion = (p.getFechaDevolucion() != null) ? p.getFechaDevolucion().toString() : "null";
                 
@@ -149,10 +176,6 @@ public class PersistenciaCSV {
         } catch (IOException e) {
             System.err.println("Error al guardar préstamos: " + e.getMessage());
         }
-    }
-
-    public static List<Prestamo> cargarPrestamos() {
-        return new ArrayList<>();
     }
 
     public static List<Prestamo> cargarPrestamos(List<Usuario> usuarios, List<Recurso> recursos) {
