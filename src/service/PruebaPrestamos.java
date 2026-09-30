@@ -22,7 +22,10 @@ public class PruebaPrestamos {
             System.out.println("4. Buscar préstamo por título");
             System.out.println("5. Ver préstamos de un usuario");
             System.out.println("6. Ver recursos disponibles o prestados");
-            System.out.println("7. Volver / Salir");
+            System.out.println("7. Filtrar recursos por TIPO (Libro/Película/Videojuego)");
+            System.out.println("8. Buscar recursos por año de publicación (Consulta Extra 1)");
+            System.out.println("9. Ver historial de préstamos DEVUELTOS (Consulta Extra 2)");
+            System.out.println("10. Volver / Salir");
             System.out.print("Selecciona una opción: ");
 
             try {
@@ -112,6 +115,69 @@ public class PruebaPrestamos {
                         break;
 
                     case 7:
+                        System.out.print("Introduce el tipo a filtrar (LIBRO, PELICULA, VIDEOJUEGO): ");
+                        String tipoFiltro = scanner.nextLine().trim().toUpperCase();
+                        System.out.println("\n=== RECURSOS FILTRADOS POR TIPO ===");
+                        int encontradosTipo = 0;
+
+                        // Evaluamos tanto los disponibles como prestados mediante el puente del gestor
+                        for (Recurso r : gestor.obtenerRecursosPorEstado(true)) {
+                            if ((tipoFiltro.equals("LIBRO") && r instanceof model.Libro) ||
+                                (tipoFiltro.equals("PELICULA") && r instanceof model.Pelicula) ||
+                                (tipoFiltro.equals("VIDEOJUEGO") && r instanceof model.Videojuego)) {
+                                System.out.println(r);
+                                encontradosTipo++;
+                            }
+                        }
+                        for (Recurso r : gestor.obtenerRecursosPorEstado(false)) {
+                            if ((tipoFiltro.equals("LIBRO") && r instanceof model.Libro) ||
+                                (tipoFiltro.equals("PELICULA") && r instanceof model.Pelicula) ||
+                                (tipoFiltro.equals("VIDEOJUEGO") && r instanceof model.Videojuego)) {
+                                System.out.println(r);
+                                encontradosTipo++;
+                            }
+                        }
+                        if (encontradosTipo == 0) {
+                            System.out.println("No se encontraron recursos de ese tipo.");
+                        }
+                        break;
+
+                    case 8:
+                        System.out.print("Introduce el año de publicación a buscar: ");
+                        int anioBusqueda = Integer.parseInt(scanner.nextLine());
+                        System.out.println("\n=== RECURSOS DEL AÑO " + anioBusqueda + " ===");
+                        int encontradosAnio = 0;
+
+                        for (Recurso r : gestor.obtenerRecursosPorEstado(true)) {
+                            if (r.getAnio() == anioBusqueda) {
+                                System.out.println(r);
+                                encontradosAnio++;
+                            }
+                        }
+                        for (Recurso r : gestor.obtenerRecursosPorEstado(false)) {
+                            if (r.getAnio() == anioBusqueda) {
+                                System.out.println(r);
+                                encontradosAnio++;
+                            }
+                        }
+                        if (encontradosAnio == 0) {
+                            System.out.println("No hay recursos registrados en ese año.");
+                        }
+                        break;
+
+                    case 9:
+                        System.out.println("\n=== HISTORIAL DE PRÉSTAMOS DEVUELTOS ===");
+                        List<Prestamo> devueltos = gestor.obtenerPrestamosDevueltos();
+                        if (devueltos.isEmpty()) {
+                            System.out.println("No hay registros de devoluciones en el sistema.");
+                        } else {
+                            for (Prestamo p : devueltos) {
+                                System.out.println(p);
+                            }
+                        }
+                        break;
+
+                    case 10:
                         System.out.println("Saliendo del módulo de préstamos...");
                         break;
 
@@ -123,6 +189,6 @@ public class PruebaPrestamos {
             } catch (UsuarioNoEncontradoException | RecursoNoEncontradoException | IllegalStateException e) {
                 System.out.println(e.getMessage());
             }
-        } while (opcion != 7);
+        } while (opcion != 10);
     }
 }

@@ -119,4 +119,16 @@ public class GestionPrestamos {
     public void setListaPrestamos(List<Prestamo> prestamos) {
         this.prestamos = prestamos;
     }
+    
+    // Consulta adicional 2: Obtener historial de préstamos devueltos (inactivos)
+    public List<Prestamo> obtenerPrestamosDevueltos() {
+        List<Prestamo> devueltos = new ArrayList<>();
+        for (Prestamo p : prestamos) {
+            if (!p.isActivo()) {
+                devueltos.add(p);
+            }
+        }
+        return devueltos;
+    }
+
 }
