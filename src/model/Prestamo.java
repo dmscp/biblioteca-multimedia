@@ -10,6 +10,18 @@ public class Prestamo {
     private LocalDate fechaDevolucion; 
     private boolean activo;
 
+    // CONSTRUCTOR PRINCIPAL: Para préstamos nuevos (Genera el ID solo aleatoriamente en base al tiempo/hash)
+    public Prestamo(Usuario usuario, Recurso recurso) {
+        // Genera un número entero único positivo basado en el hash del UUID para simular la misma estructura
+        this.idPrestamo = Math.abs(java.util.UUID.randomUUID().hashCode());
+        this.usuario = usuario;
+        this.recurso = recurso;
+        this.fechaPrestamo = LocalDate.now();
+        this.fechaDevolucion = null;
+        this.activo = true;
+    }
+
+    // CONSTRUCTOR DE PERSISTENCIA: Usado por el CSV para mantener el ID original
     public Prestamo(int idPrestamo, Usuario usuario, Recurso recurso) {
         this.idPrestamo = idPrestamo;
         this.usuario = usuario;

@@ -22,7 +22,7 @@ public class GestionPrestamos {
     }
 
     // Registra un nuevo préstamo verificando existencia de usuario y recurso
-    public Prestamo prestarRecurso(int idPrestamo, String idUsuario, String idRecurso) 
+    public Prestamo prestarRecurso(String idUsuario, String idRecurso) 
             throws UsuarioNoEncontradoException, RecursoNoEncontradoException, IllegalStateException {
 
         Usuario usuario = gestionUsuarios.buscarUsuarioPorId(idUsuario);
@@ -32,7 +32,7 @@ public class GestionPrestamos {
             throw new IllegalStateException("Error: El recurso '" + recurso.getTitulo() + "' ya está prestado.");
         }
 
-        Prestamo nuevoPrestamo = new Prestamo(idPrestamo, usuario, recurso);
+        Prestamo nuevoPrestamo = new Prestamo(usuario, recurso);
         recurso.setEstado(EstadoRecurso.PRESTADO);
         prestamos.add(nuevoPrestamo);
         return nuevoPrestamo;
