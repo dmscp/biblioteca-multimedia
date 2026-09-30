@@ -24,6 +24,7 @@ public class Main {
         
         gestorUsuarios.setListaUsuarios(PersistenciaCSV.cargarUsuarios());
         gestorRecursos.setListaRecursos(PersistenciaCSV.cargarRecursos());
+        gestorPrestamos.setListaPrestamos(PersistenciaCSV.cargarPrestamos()); 
 
         Scanner scanner = new Scanner(System.in);
         int opcion = 0;
@@ -33,7 +34,7 @@ public class Main {
             System.out.println("1. Gestión de Usuarios");
             System.out.println("2. Gestión de Recursos");
             System.out.println("3. Gestión de Préstamos");
-            System.out.println("3. Salir");
+            System.out.println("4. Salir");
             System.out.print("Selecciona una opción: ");
 
             try {
