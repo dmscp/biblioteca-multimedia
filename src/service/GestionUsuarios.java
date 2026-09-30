@@ -27,8 +27,13 @@ public class GestionUsuarios {
     // 1. C - CREAR (Comprueba duplicados antes de insertar)
     public void crearUsuario(Usuario nuevoUsuario) {
         for (Usuario u : listaUsuarios) {
+            // Validación por ID (por seguridad)
             if (u.getId().equalsIgnoreCase(nuevoUsuario.getId())) {
                 throw new UsuarioDuplicadoException("Error: Ya existe un usuario con el ID '" + nuevoUsuario.getId() + "'.");
+            }
+            // Nueva Validación: Control de correo electrónico único
+            if (u.getCorreoElectronico().equalsIgnoreCase(nuevoUsuario.getCorreoElectronico())) {
+                throw new UsuarioDuplicadoException("Error: Ya existe un usuario registrado con el correo electrónico '" + nuevoUsuario.getCorreoElectronico() + "'.");
             }
         }
         listaUsuarios.add(nuevoUsuario);
@@ -58,7 +63,13 @@ public class GestionUsuarios {
 
     // 4. U - MODIFICAR
     public void modificarUsuario(String id, String nuevoNombre, String nuevoCorreo) {
-        // Reutilizamos el buscador; si no lo encuentra, lanza la excepción automáticamente
+        // Primero verificamos que el nuevo correo no pertenezca a OTRO usuario distinto
+        for (Usuario u : listaUsuarios) {
+            if (!u.getId().equalsIgnoreCase(id) && u.getCorreoElectronico().equalsIgnoreCase(nuevoCorreo)) {
+                throw new UsuarioDuplicadoException("Error: No se puede actualizar. El correo '" + nuevoCorreo + "' ya está en uso por otro usuario.");
+            }
+        }
+        
         Usuario usuario = buscarUsuarioPorId(id); 
         usuario.setNombre(nuevoNombre);
         usuario.setCorreoElectronico(nuevoCorreo);
