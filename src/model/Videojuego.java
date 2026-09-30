@@ -12,8 +12,8 @@ public class Videojuego extends Recurso {
 	}
 
 	// Para cargar videojuegos desde el CSV
-	public Videojuego(String identificador, String titulo, int anio, String plataforma, int pegi) {
-		super(identificador, titulo, anio);
+	public Videojuego(String identificador, String titulo, int anio, String plataforma, int pegi, EstadoRecurso estado) {
+		super(identificador, titulo, anio, estado);
 		this.plataforma = plataforma;
 		this.pegi = pegi;
 	}

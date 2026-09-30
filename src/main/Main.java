@@ -18,13 +18,15 @@ public class Main {
         GestionUsuarios gestorUsuarios = new GestionUsuarios();
         GestionRecursos gestorRecursos = new GestionRecursos();
         GestionPrestamos gestorPrestamos = new GestionPrestamos(gestorUsuarios, gestorRecursos);
+
         // ========================================================
         // 1. CARGA AUTOMÁTICA AL INICIAR EL PROGRAMA
         // ========================================================
         
         gestorUsuarios.setListaUsuarios(PersistenciaCSV.cargarUsuarios());
         gestorRecursos.setListaRecursos(PersistenciaCSV.cargarRecursos());
-        gestorPrestamos.setListaPrestamos(PersistenciaCSV.cargarPrestamos()); 
+        gestorPrestamos.setListaPrestamos(PersistenciaCSV.cargarPrestamos(gestorUsuarios.getListaUsuarios(), gestorRecursos.getListaRecursos()));
+
 
         Scanner scanner = new Scanner(System.in);
         int opcion = 0;

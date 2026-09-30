@@ -12,8 +12,8 @@ public class Libro extends Recurso {
 	}
 
 	// Para cargar libros desde el CSV
-	public Libro(String identificador, String titulo, int anio, String autor, int paginas) {
-		super(identificador, titulo, anio);
+	public Libro(String identificador, String titulo, int anio, String autor, int paginas, EstadoRecurso estado) {
+		super(identificador, titulo, anio, estado);
 		this.autor = autor;
 		this.paginas = paginas;
 	}

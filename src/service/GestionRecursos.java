@@ -119,7 +119,7 @@ public class GestionRecursos {
     		((Videojuego) r).setPegi(pegi);
     	}
     	else {
-    		throw new RecursoTipoInvalidoExcepcion("Error: El recurso a modificar no es una pelicula");
+    		throw new RecursoTipoInvalidoExcepcion("Error: El recurso a modificar no es un videojuego");
     	}
     }
     

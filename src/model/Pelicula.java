@@ -12,8 +12,8 @@ public class Pelicula extends Recurso {
 	}
 
 	// Para cargar películas desde el CSV
-	public Pelicula(String identificador, String titulo, int anio, String director, int duracionMinutos) {
-		super(identificador, titulo, anio);
+	public Pelicula(String identificador, String titulo, int anio, String director, int duracionMinutos, EstadoRecurso estado) {
+		super(identificador, titulo, anio, estado);
 		this.director = director;
 		this.duracionMinutos = duracionMinutos;
 	}

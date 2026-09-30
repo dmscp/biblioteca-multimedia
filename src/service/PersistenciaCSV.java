@@ -59,7 +59,6 @@ public class PersistenciaCSV {
                 String espec1 = "";
                 String espec2 = "";
 
-                // Detectamos la subclase para extraer sus campos específicos
                 if (r instanceof Libro) {
                     tipo = "LIBRO";
                     espec1 = ((Libro) r).getAutor();
@@ -74,13 +73,14 @@ public class PersistenciaCSV {
                     espec2 = String.valueOf(((Videojuego) r).getPegi());
                 }
 
-                // Estructura: TIPO;identificador;titulo;anio;especifico1;especifico2
+                // Estructura CORREGIDA: Agregamos el estado al final de la línea
                 String linea = tipo + SEPARADOR + 
                                r.getIdentificador() + SEPARADOR + 
                                r.getTitulo() + SEPARADOR + 
                                r.getAnio() + SEPARADOR + 
                                espec1 + SEPARADOR + 
-                               espec2;
+                               espec2 + SEPARADOR +
+                               r.getEstado().name(); // <-- Guardamos DISPONIBLE o PRESTADO
                 bw.write(linea);
                 bw.newLine();
             }
@@ -98,26 +98,23 @@ public class PersistenciaCSV {
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] datos = linea.split(SEPARADOR);
-                if (datos.length < 6) continue;
+                if (datos.length < 7) continue; // CORREGIDO: Ahora el tamaño mínimo debe ser 7 columnas
 
                 String tipo = datos[0];
                 String id = datos[1];
                 String titulo = datos[2];
                 int anio = Integer.parseInt(datos[3]);
+                EstadoRecurso estado = EstadoRecurso.valueOf(datos[6]); // Recuperamos el Enum
 
-                // Instanciamos el objeto correcto basándonos en la primera columna
                 switch (tipo) {
                     case "LIBRO":
-                        // Libro(identificador, titulo, anio, autor, paginas)
-                        recursos.add(new Libro(id, titulo, anio, datos[4], Integer.parseInt(datos[5])));
+                        recursos.add(new Libro(id, titulo, anio, datos[4], Integer.parseInt(datos[5]), estado));
                         break;
                     case "PELICULA":
-                        // Pelicula(identificador, titulo, anio, director, duracionMinutos)
-                        recursos.add(new Pelicula(id, titulo, anio, datos[4], Integer.parseInt(datos[5])));
+                        recursos.add(new Pelicula(id, titulo, anio, datos[4], Integer.parseInt(datos[5]), estado));
                         break;
                     case "VIDEOJUEGO":
-                        // Videojuego(identificador, titulo, anio, plataforma, pegi)
-                        recursos.add(new Videojuego(id, titulo, anio, datos[4], Integer.parseInt(datos[5])));
+                        recursos.add(new Videojuego(id, titulo, anio, datos[4], Integer.parseInt(datos[5]), estado));
                         break;
                 }
             }
@@ -126,6 +123,7 @@ public class PersistenciaCSV {
         }
         return recursos;
     }
+
 
     // ==========================================
     //          PERSISTENCIA DE PRÉSTAMOS

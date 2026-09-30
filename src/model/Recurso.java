@@ -19,11 +19,11 @@ public abstract class Recurso {
 	}
 
 	// CONSTRUCTOR DE PERSISTENCIA: Usado por el CSV para mantener el ID original
-	protected Recurso(String identificador, String titulo, int anio) {
+	protected Recurso(String identificador, String titulo, int anio, EstadoRecurso estado) {
 		this.identificador = identificador;
 		this.titulo = titulo;
 		this.anio = anio;
-		this.estado = EstadoRecurso.DISPONIBLE;
+		this.estado = estado;
 	}
 
 	public String getIdentificador() { return identificador; }
