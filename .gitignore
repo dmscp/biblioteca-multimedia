@@ -37,4 +37,4 @@ build/
 *.iml
 
 # Archivos csv
-src/datos
+src/datos/*.csv

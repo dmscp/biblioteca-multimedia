@@ -36,7 +36,7 @@ Para compilar y ejecutar la aplicación de consola, asegúrese de contar con el 
    ```
 3. Compile los archivos fuente dirigiendo la salida al directorio de clases correspondientes (o bien importe el proyecto directamente en su IDE de preferencia como Eclipse o IntelliJ IDEA):
    ```bash
-   javac -d bin src/model/*.java src/exceptions/*.java src/service/*.java src/main/*.java
+   javac -d bin src/model/*.java src/exceptions/*.java src/service/*.java src/view/*.java src/main/*.java
    ```
 4. Ejecute la aplicación:
    ```bash
@@ -48,7 +48,7 @@ Para cumplir con las pautas de trabajo en equipo y evitar que los integrantes tr
 * **Módulo de Usuarios (`feature/usuarios`):** Desarrollado por [Samuel Correia](https://github.com/dmscp), responsable del modelo de usuario, persistencia básica de usuarios y su interfaz CRUD.
 * **Módulo de Recursos (`feature/recursos`):** Desarrollado por [Allison Hernando](https://github.com/AllisonHernando), encargado de plantear la herencia de la clase abstracta Recurso, las especializaciones de Libro, Película y Videojuego, y sus mutadores.
 * **Módulo de Préstamos (`feature/prestamos`):** Desarrollado por [Marina Redondo](https://github.com/marredon9), responsable del control de flujos de disponibilidad, fechas y vinculación de elementos de la lógica de negocio.
-* **Persistencia Integrada y Excepciones (`feature/persistencia`):** Desarrollado por [Samuel Correia](https://github.com/dmscp), encargado de coordinar la lectura/escritura unificada en archivos CSV, la gestión robusta de excepciones del sistema y la corrección de fallos.
+* **Persistencia Integrada y Correción de Fallos (`feature/persistencia`):** Desarrollado por [Samuel Correia](https://github.com/dmscp), encargado de coordinar la lectura/escritura unificada en archivos CSV y la corrección de fallos.
 
 ## Problemas Relevantes Encontrados y Soluciones
 * **Pérdida de Estados en la Persistencia:** Durante las pruebas integradas se detectó que al reiniciar el programa todos los recursos volvían al estado "DISPONIBLE" independientemente de su valor en el archivo. Se solucionó extendiendo el constructor de persistencia y el método de lectura del CSV para almacenar y parsear explícitamente el valor del enum `EstadoRecurso`.
