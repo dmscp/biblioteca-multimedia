@@ -164,7 +164,7 @@ public class PersistenciaCSV {
                 String[] datos = linea.split(SEPARADOR);
                 if (datos.length < 6) continue;
 
-                int idPrestamo = Integer.parseInt(datos[0]);
+                String idPrestamo = datos[0];
                 String idUsuario = datos[1];
                 String idRecurso = datos[2];
                 LocalDate fechaPrestamo = LocalDate.parse(datos[3]);

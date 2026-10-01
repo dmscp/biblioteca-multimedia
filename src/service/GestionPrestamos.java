@@ -38,7 +38,7 @@ public class GestionPrestamos {
         return nuevoPrestamo;
     }
 
-    public boolean devolverRecurso(int idPrestamo) {
+    public boolean devolverRecurso(String idPrestamo) {
         Prestamo prestamo = buscarPrestamoActivoPorId(idPrestamo);
 
         if (prestamo == null) {
@@ -98,9 +98,9 @@ public class GestionPrestamos {
     }
 
     // búsqueda de préstamos activos por ID
-    private Prestamo buscarPrestamoActivoPorId(int idPrestamo) {
+    private Prestamo buscarPrestamoActivoPorId(String idPrestamo) {
         for (Prestamo p : prestamos) {
-            if (p.getIdPrestamo() == idPrestamo && p.isActivo()) {
+            if (p.getIdPrestamo().equalsIgnoreCase(idPrestamo) && p.isActivo()) {
                 return p;
             }
         }
