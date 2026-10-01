@@ -12,7 +12,7 @@ public class MenuPrestamos {
 
         do {
             System.out.println("\n--- TRANSACCIONES DE PRÉSTAMOS ---");
-            System.out.println("1. Registrar Ppréstamo");
+            System.out.println("1. Registrar préstamo");
             System.out.println("2. Registrar devolución");
             System.out.println("3. Volver al menú principal");
             System.out.print("Selecciona una opción: ");
