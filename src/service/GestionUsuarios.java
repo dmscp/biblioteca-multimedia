@@ -61,13 +61,14 @@ public class GestionUsuarios {
 
     //MODIFICAR USUARIO
     public void modificarUsuario(String id, String nuevoNombre, String nuevoCorreo) {
+    	Usuario usuario = buscarUsuarioPorId(id); 
+    	
         for (Usuario u : listaUsuarios) {
             if (!u.getId().equalsIgnoreCase(id) && u.getCorreoElectronico().equalsIgnoreCase(nuevoCorreo)) {
                 throw new UsuarioDuplicadoException("Error: No se puede actualizar. El correo '" + nuevoCorreo + "' ya está en uso por otro usuario.");
             }
         }
         
-        Usuario usuario = buscarUsuarioPorId(id); 
         usuario.setNombre(nuevoNombre);
         usuario.setCorreoElectronico(nuevoCorreo);
     }

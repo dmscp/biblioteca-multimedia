@@ -60,28 +60,37 @@ public class MenuRecursos {
                     case 4:
                         System.out.print("Introduce el ID del recurso a modificar: ");
                         String idMod = scanner.nextLine();
-                        Recurso r = gestor.buscarRecursoPorIdentificador(idMod);
                         
-                        System.out.print("Nuevo título [" + r.getTitulo() + "]: ");
-                        String nT = scanner.nextLine();
-                        System.out.print("Nuevo año [" + r.getAnio() + "]: ");
-                        int nA = Integer.parseInt(scanner.nextLine());
+                        try {
+                            Recurso r = gestor.buscarRecursoPorIdentificador(idMod);
+                            
+                            System.out.print("Nuevo título [" + r.getTitulo() + "]: ");
+                            String nT = scanner.nextLine();
+                            System.out.print("Nuevo año [" + r.getAnio() + "]: ");
+                            int nA = Integer.parseInt(scanner.nextLine());
 
-                        if (r instanceof Libro) {
-                            System.out.print("Nuevo autor: "); String nAut = scanner.nextLine();
-                            System.out.print("Nuevas páginas: "); int nPag = Integer.parseInt(scanner.nextLine());
-                            gestor.modificarLibro(idMod, nT, nA, nAut, nPag);
-                        } else if (r instanceof Pelicula) {
-                            System.out.print("Nuevo director: "); String nDir = scanner.nextLine();
-                            System.out.print("Nueva duración: "); int nDur = Integer.parseInt(scanner.nextLine());
-                            gestor.modificarPelicula(idMod, nT, nA, nDir, nDur);
-                        } else if (r instanceof Videojuego) {
-                            System.out.print("Nueva plataforma: "); String nPlat = scanner.nextLine();
-                            System.out.print("Nuevo PEGI: "); int nPegi = Integer.parseInt(scanner.nextLine());
-                            gestor.modificarVideojuego(idMod, nT, nA, nPlat, nPegi);
+                            if (r instanceof Libro) {
+                                System.out.print("Nuevo autor: "); String nAut = scanner.nextLine();
+                                System.out.print("Nuevas páginas: "); int nPag = Integer.parseInt(scanner.nextLine());
+                                gestor.modificarLibro(idMod, nT, nA, nAut, nPag);
+                            } else if (r instanceof Pelicula) {
+                                System.out.print("Nuevo director: "); String nDir = scanner.nextLine();
+                                System.out.print("Nueva duración (min): "); int nDur = Integer.parseInt(scanner.nextLine());
+                                gestor.modificarPelicula(idMod, nT, nA, nDir, nDur);
+                            } else if (r instanceof Videojuego) {
+                                System.out.print("Nueva plataforma: "); String nPlat = scanner.nextLine();
+                                System.out.print("Nuevo PEGI: "); int nPegi = Integer.parseInt(scanner.nextLine());
+                                gestor.modificarVideojuego(idMod, nT, nA, nPlat, nPegi);
+                            }
+                            System.out.println("Recurso modificado correctamente.");
+                            
+                        } catch (RecursoNoEncontradoException | RecursoTipoInvalidoExcepcion e) {
+                            System.out.println(e.getMessage());
+                        } catch (NumberFormatException e) {
+                            System.out.println("Error: Formato de número incorrecto en el año o campos numéricos.");
                         }
-                        System.out.println("Recurso modificado correctamente.");
                         break;
+
 
                     case 5:
                         System.out.print("Introduce el ID del recurso a eliminar: ");
@@ -96,7 +105,7 @@ public class MenuRecursos {
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Error: Por favor, introduce un número válido.");
-            } catch (DuplicadoRecursoException | RecursoNoEncontradoException | RecursoTipoInvalidoExcepcion e) {
+            } catch (DuplicadoRecursoException | RecursoNoEncontradoException e) {
                 System.out.println(e.getMessage());
             }
         } while (opcion != 6);

@@ -44,12 +44,21 @@ public class MenuUsuarios {
                     case 4:
                         System.out.print("Introduce el ID del usuario a modificar: ");
                         String idMod = scanner.nextLine();
-                        System.out.print("Nuevo nombre: ");
-                        String nNombre = scanner.nextLine();
-                        System.out.print("Nuevo correo: ");
-                        String nCorreo = scanner.nextLine();
-                        gestor.modificarUsuario(idMod, nNombre, nCorreo);
-                        System.out.println("Usuario modificado con éxito.");
+                        try {
+                            Usuario uExistente = gestor.buscarUsuarioPorId(idMod);
+                            
+                            System.out.print("Nuevo nombre [" + uExistente.getNombre() + "]: ");
+                            String nNombre = scanner.nextLine();
+                            System.out.print("Nuevo correo [" + uExistente.getCorreoElectronico() + "]: ");
+                            String nCorreo = scanner.nextLine();
+                            
+                            gestor.modificarUsuario(idMod, nNombre, nCorreo);
+                            System.out.println("Usuario modificado con éxito.");
+                        } catch (UsuarioNoEncontradoException e) {
+                            System.out.println(e.getMessage());
+                        } catch (UsuarioDuplicadoException e) {
+                            System.out.println(e.getMessage());
+                        }
                         break;
                     case 5:
                         System.out.print("Introduce el ID del usuario a eliminar: ");
