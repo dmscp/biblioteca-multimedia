@@ -4,14 +4,14 @@ public class Libro extends Recurso {
 	private String autor;
 	private int paginas;
 
-	// Para crear libros nuevos en la app
+    //CONSTRUCTOR PRINCIPAL
 	public Libro(String titulo, int anio, String autor, int paginas) {
 		super(titulo, anio);
 		this.autor = autor;
 		this.paginas = paginas;
 	}
 
-	// Para cargar libros desde el CSV
+    //CONSTRUCTOR DE PERSISTENCIA
 	public Libro(String identificador, String titulo, int anio, String autor, int paginas, EstadoRecurso estado) {
 		super(identificador, titulo, anio, estado);
 		this.autor = autor;

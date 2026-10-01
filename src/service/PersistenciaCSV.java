@@ -12,10 +12,7 @@ public class PersistenciaCSV {
     private static final String ARCHIVO_PRESTAMOS = "src/datos/prestamos.csv";
     private static final String SEPARADOR = ";";
 
-    // ==========================================
-    //           PERSISTENCIA DE USUARIOS
-    // ==========================================
-
+    //PERSISTENCIA DE USUARIOS
     public static void guardarUsuarios(List<Usuario> usuarios) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARCHIVO_USUARIOS))) {
             for (Usuario u : usuarios) {
@@ -38,7 +35,6 @@ public class PersistenciaCSV {
             while ((linea = br.readLine()) != null) {
                 String[] datos = linea.split(SEPARADOR);
                 if (datos.length == 3) {
-                    // Constructor: Usuario(id, nombre, correoElectronico)
                     usuarios.add(new Usuario(datos[0], datos[1], datos[2]));
                 }
             }
@@ -48,10 +44,7 @@ public class PersistenciaCSV {
         return usuarios;
     }
 
-    // ==========================================
-    //           PERSISTENCIA DE RECURSOS
-    // ==========================================
-
+    //PERSISTENCIA DE RECURSOS
     public static void guardarRecursos(List<Recurso> recursos) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARCHIVO_RECURSOS))) {
             for (Recurso r : recursos) {
@@ -73,14 +66,13 @@ public class PersistenciaCSV {
                     espec2 = String.valueOf(((Videojuego) r).getPegi());
                 }
 
-                // Estructura CORREGIDA: Agregamos el estado al final de la línea
                 String linea = tipo + SEPARADOR + 
                                r.getIdentificador() + SEPARADOR + 
                                r.getTitulo() + SEPARADOR + 
                                r.getAnio() + SEPARADOR + 
                                espec1 + SEPARADOR + 
                                espec2 + SEPARADOR +
-                               r.getEstado().name(); // <-- Guardamos DISPONIBLE o PRESTADO
+                               r.getEstado().name();
                 bw.write(linea);
                 bw.newLine();
             }
@@ -98,13 +90,13 @@ public class PersistenciaCSV {
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] datos = linea.split(SEPARADOR);
-                if (datos.length < 7) continue; // CORREGIDO: Ahora el tamaño mínimo debe ser 7 columnas
+                if (datos.length < 7) continue;
 
                 String tipo = datos[0];
                 String id = datos[1];
                 String titulo = datos[2];
                 int anio = Integer.parseInt(datos[3]);
-                EstadoRecurso estado = EstadoRecurso.valueOf(datos[6]); // Recuperamos el Enum
+                EstadoRecurso estado = EstadoRecurso.valueOf(datos[6]);
 
                 switch (tipo) {
                     case "LIBRO":
@@ -124,17 +116,12 @@ public class PersistenciaCSV {
         return recursos;
     }
 
-
-    // ==========================================
-    //          PERSISTENCIA DE PRÉSTAMOS
-    // ==========================================
-
+    //PERSISTENCIA DE PRÉSTAMOS
     public static void guardarPrestamos(List<Prestamo> prestamos) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARCHIVO_PRESTAMOS))) {
             for (Prestamo p : prestamos) {
                 String fDevolucion = (p.getFechaDevolucion() != null) ? p.getFechaDevolucion().toString() : "null";
                 
-                // Estructura: idPrestamo;idUsuario;idRecurso;fechaPrestamo;fechaDevolucion;activo
                 String linea = p.getIdPrestamo() + SEPARADOR +
                                p.getUsuario().getId() + SEPARADOR +
                                p.getRecurso().getIdentificador() + SEPARADOR +
@@ -171,7 +158,6 @@ public class PersistenciaCSV {
                 String strFechaDev = datos[4];
                 boolean activo = Boolean.parseBoolean(datos[5]);
 
-                // Busqueda de las referencias de usuario y recurso en las listas cargadas
                 Usuario usuarioObj = usuarios.stream()
                         .filter(u -> u.getId().equalsIgnoreCase(idUsuario))
                         .findFirst().orElse(null);
@@ -188,7 +174,6 @@ public class PersistenciaCSV {
                     }
                     p.setActivo(activo);
                     
-                    // Si el préstamo sigue activo, actualizar el estado del recurso
                     if (activo) {
                         recursoObj.setEstado(EstadoRecurso.PRESTADO);
                     }

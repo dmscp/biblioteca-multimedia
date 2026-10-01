@@ -19,7 +19,7 @@ public class Main {
         GestionRecursos gestorRecursos = new GestionRecursos();
         GestionPrestamos gestorPrestamos = new GestionPrestamos(gestorUsuarios, gestorRecursos);
         
-        // Carga automática inicial
+        // CARGA INICIAL AUTOMATICA DE DATOS
         gestorUsuarios.setListaUsuarios(PersistenciaCSV.cargarUsuarios());
         gestorRecursos.setListaRecursos(PersistenciaCSV.cargarRecursos());
         gestorPrestamos.setListaPrestamos(PersistenciaCSV.cargarPrestamos(gestorUsuarios.getListaUsuarios(), gestorRecursos.getListaRecursos()));

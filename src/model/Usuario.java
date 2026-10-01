@@ -7,14 +7,14 @@ public class Usuario {
     private String nombre;
     private String correoElectronico;
 
-    // CONSTRUCTOR PRINCIPAL: Para crear usuarios nuevos (Genera el ID solo)
+    //CONSTRUCTOR PRINCIPAL
     public Usuario(String nombre, String correoElectronico) {
         this.id = UUID.randomUUID().toString();
         this.nombre = nombre;
         this.correoElectronico = correoElectronico;
     }
 
-    // CONSTRUCTOR DE PERSISTENCIA: Usado por PersistenciaCSV para reconstruir el objeto
+    //CONSTRUCTOR DE PERSISTENCIA
     public Usuario(String id, String nombre, String correoElectronico) {
         this.id = id;
         this.nombre = nombre;

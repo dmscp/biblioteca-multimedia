@@ -4,14 +4,14 @@ public class Videojuego extends Recurso {
 	private String plataforma;
 	private int pegi;
 
-	// Para crear videojuegos nuevos en la app
+	//CONSTRUCTOR PRINCIPAL
 	public Videojuego(String titulo, int anio, String plataforma, int pegi) {
 		super(titulo, anio);
 		this.plataforma = plataforma;
 		this.pegi = pegi;
 	}
 
-	// Para cargar videojuegos desde el CSV
+	//CONSTRUCTOR DE PERSISTENCIA
 	public Videojuego(String identificador, String titulo, int anio, String plataforma, int pegi, EstadoRecurso estado) {
 		super(identificador, titulo, anio, estado);
 		this.plataforma = plataforma;

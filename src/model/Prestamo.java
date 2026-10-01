@@ -11,9 +11,8 @@ public class Prestamo {
     private LocalDate fechaDevolucion; 
     private boolean activo;
 
-    // CONSTRUCTOR PRINCIPAL: Para préstamos nuevos (Genera el ID solo aleatoriamente en base al tiempo/hash)
+    //CONSTRUCTOR PRINCIPAL
     public Prestamo(Usuario usuario, Recurso recurso) {
-        // Genera un número entero único positivo basado en el hash del UUID para simular la misma estructura
         this.idPrestamo = UUID.randomUUID().toString();
         this.usuario = usuario;
         this.recurso = recurso;
@@ -22,7 +21,7 @@ public class Prestamo {
         this.activo = true;
     }
 
-    // CONSTRUCTOR DE PERSISTENCIA: Usado por el CSV para mantener el ID original
+    //CONSTRUCTOR DE PERSISTENCIA
     public Prestamo(String idPrestamo, Usuario usuario, Recurso recurso) {
         this.idPrestamo = idPrestamo;
         this.usuario = usuario;
@@ -33,57 +32,23 @@ public class Prestamo {
     }
 
     
-    // Getters y Setters
-    public String getIdPrestamo() {
-        return idPrestamo;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public Recurso getRecurso() {
-        return recurso;
-    }
-
-    public void setRecurso(Recurso recurso) {
-        this.recurso = recurso;
-    }
-
-    public LocalDate getFechaPrestamo() {
-        return fechaPrestamo;
-    }
-
-    public void setFechaPrestamo(LocalDate fechaPrestamo) {
-        this.fechaPrestamo = fechaPrestamo;
-    }
-
-    public LocalDate getFechaDevolucion() {
-        return fechaDevolucion;
-    }
-
-    public void setFechaDevolucion(LocalDate fechaDevolucion) {
-        this.fechaDevolucion = fechaDevolucion;
-    }
-    
-    
+    public String getIdPrestamo() { return idPrestamo; }
+    public Usuario getUsuario() { return usuario; }
+    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
+    public Recurso getRecurso() { return recurso; }
+    public void setRecurso(Recurso recurso) { this.recurso = recurso; }
+    public LocalDate getFechaPrestamo() { return fechaPrestamo; }
+    public void setFechaPrestamo(LocalDate fechaPrestamo) { this.fechaPrestamo = fechaPrestamo; }
+    public LocalDate getFechaDevolucion() { return fechaDevolucion; }
+    public void setFechaDevolucion(LocalDate fechaDevolucion) { this.fechaDevolucion = fechaDevolucion; }
     
     public void registrarDevolucion() {
         this.fechaDevolucion = LocalDate.now();
         this.activo = false;
     }
 
-    public boolean isActivo() {
-        return activo;
-    }
-
-    public void setActivo(boolean activo) {
-        this.activo = activo;
-    }
+    public boolean isActivo() { return activo; }
+    public void setActivo(boolean activo) { this.activo = activo; }
 
     @Override
     public String toString() {

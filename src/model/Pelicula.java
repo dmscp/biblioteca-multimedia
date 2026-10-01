@@ -4,14 +4,14 @@ public class Pelicula extends Recurso {
 	private String director;
 	private int duracionMinutos;
 
-	// Para crear películas nuevas en la app
+    //CONSTRUCTOR PRINCIPAL
 	public Pelicula(String titulo, int anio, String director, int duracionMinutos) {
 		super(titulo, anio);
 		this.director = director;
 		this.duracionMinutos = duracionMinutos;
 	}
 
-	// Para cargar películas desde el CSV
+    //CONSTRUCTOR DE PERSISTENCIA
 	public Pelicula(String identificador, String titulo, int anio, String director, int duracionMinutos, EstadoRecurso estado) {
 		super(identificador, titulo, anio, estado);
 		this.director = director;

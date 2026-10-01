@@ -10,7 +10,7 @@ public abstract class Recurso {
 	private int anio;
 	private EstadoRecurso estado;
 
-	// CONSTRUCTOR PRINCIPAL: Para recursos nuevos (Genera el ID solo)
+	//CONSTRUCTOR PRINCIPAL
 	protected Recurso(String titulo, int anio) {
 		this.identificador = UUID.randomUUID().toString();
 		this.titulo = titulo;
@@ -18,7 +18,7 @@ public abstract class Recurso {
 		this.estado = EstadoRecurso.DISPONIBLE;
 	}
 
-	// CONSTRUCTOR DE PERSISTENCIA: Usado por el CSV para mantener el ID original
+	//CONSTRUCTOR DE PERSISTENCIA
 	protected Recurso(String identificador, String titulo, int anio, EstadoRecurso estado) {
 		this.identificador = identificador;
 		this.titulo = titulo;

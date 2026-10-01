@@ -13,7 +13,7 @@ import model.Recurso;
 import model.Videojuego;
 
 public class GestionRecursos {
-    
+
     private List<Recurso> listaRecursos;
 
     public GestionRecursos() {
@@ -28,6 +28,7 @@ public class GestionRecursos {
         this.listaRecursos = listaRecursos;
     }
 
+    //CREAR RECURSO
     public void crearRecurso(Recurso recurso) throws DuplicadoRecursoException {
         try {
             buscarRecursoPorIdentificador(recurso.getIdentificador());
@@ -37,6 +38,7 @@ public class GestionRecursos {
         }
     }
 
+    //LISTAR RECURSOS
     public void listarRecursos() {
         if (listaRecursos.isEmpty()) {
             System.out.println("No hay recursos en el sistema.");
@@ -49,6 +51,7 @@ public class GestionRecursos {
         }
     }
 
+    //BUSCAR POR ID
     public Recurso buscarRecursoPorIdentificador(String identificador) throws RecursoNoEncontradoException {
         for (Recurso r : listaRecursos) {
             if (r.getIdentificador().equalsIgnoreCase(identificador)) {
@@ -58,6 +61,7 @@ public class GestionRecursos {
         throw new RecursoNoEncontradoException("Error: El recurso con identificador '" + identificador + "' no existe.");
     }
 
+    //ELIMINAR RECURSO
     public void eliminarRecurso(String identificador) throws RecursoNoEncontradoException {
         try {
             Recurso r = buscarRecursoPorIdentificador(identificador);
@@ -67,6 +71,7 @@ public class GestionRecursos {
         }
     }
 
+    //MODIFICAR LIBRO
     public void modificarLibro(String identificador, String titulo, int anio, String autor, int paginas) throws RecursoNoEncontradoException, RecursoTipoInvalidoExcepcion {
         Recurso r = buscarRecursoPorIdentificador(identificador);
         if (r instanceof Libro) {
@@ -79,6 +84,7 @@ public class GestionRecursos {
         }
     }
     
+    //MODIFICAR PELICULA
     public void modificarPelicula(String identificador, String titulo, int anio, String director, int duracionMinutos) throws RecursoNoEncontradoException, RecursoTipoInvalidoExcepcion {
         Recurso r = buscarRecursoPorIdentificador(identificador);
         if (r instanceof Pelicula) {
@@ -91,6 +97,7 @@ public class GestionRecursos {
         }
     }
     
+    //MODIFICAR VIDEOJUEGO
     public void modificarVideojuego(String identificador, String titulo, int anio, String plataforma, int pegi) throws RecursoNoEncontradoException, RecursoTipoInvalidoExcepcion {
         Recurso r = buscarRecursoPorIdentificador(identificador);
         if (r instanceof Videojuego) {
@@ -108,11 +115,8 @@ public class GestionRecursos {
         return r.getEstado();
     }
 
-    // ========================================================
-    // NUEVAS FUNCIONALIDADES OBLIGATORIAS Y CONSULTAS EXTRA
-    // ========================================================
 
-    // Requisito Obligatorio: Recursos filtrados por tipo
+    // FUNCIONALIDAD OBLIGATORIA: Recursos filtrados por tipo
     public List<Recurso> filtrarPorTipo(String tipo) {
         List<Recurso> filtrados = new ArrayList<>();
         for (Recurso r : listaRecursos) {
@@ -127,7 +131,7 @@ public class GestionRecursos {
         return filtrados;
     }
 
-    // Consulta adicional 1: Recursos por año de publicación
+    // CONSULTA ADICIONAL: Recursos por año de publicación
     public List<Recurso> buscarRecursosPorAnio(int anio) {
         List<Recurso> filtrados = new ArrayList<>();
         for (Recurso r : listaRecursos) {
