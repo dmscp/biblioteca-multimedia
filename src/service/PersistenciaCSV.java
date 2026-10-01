@@ -14,7 +14,14 @@ public class PersistenciaCSV {
 
     //PERSISTENCIA DE USUARIOS
     public static void guardarUsuarios(List<Usuario> usuarios) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARCHIVO_USUARIOS))) {
+
+        File file = new File(ARCHIVO_USUARIOS);
+        File carpeta = file.getParentFile();
+        if (carpeta != null && !carpeta.exists()) {
+            carpeta.mkdirs();
+        }
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
             for (Usuario u : usuarios) {
                 String linea = u.getId() + SEPARADOR + u.getNombre() + SEPARADOR + u.getCorreoElectronico();
                 bw.write(linea);
@@ -46,7 +53,14 @@ public class PersistenciaCSV {
 
     //PERSISTENCIA DE RECURSOS
     public static void guardarRecursos(List<Recurso> recursos) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARCHIVO_RECURSOS))) {
+
+        File file = new File(ARCHIVO_RECURSOS);
+        File carpeta = file.getParentFile();
+        if (carpeta != null && !carpeta.exists()) {
+            carpeta.mkdirs();
+        }
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
             for (Recurso r : recursos) {
                 String tipo = "";
                 String espec1 = "";
@@ -118,15 +132,20 @@ public class PersistenciaCSV {
 
     //PERSISTENCIA DE PRÉSTAMOS
     public static void guardarPrestamos(List<Prestamo> prestamos) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARCHIVO_PRESTAMOS))) {
+        File file = new File(ARCHIVO_PRESTAMOS);
+        File carpeta = file.getParentFile();
+        if (carpeta != null && !carpeta.exists()) {
+            carpeta.mkdirs();
+        }
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
             for (Prestamo p : prestamos) {
-                String fDevolucion = (p.getFechaDevolucion() != null) ? p.getFechaDevolucion().toString() : "null";
-                
-                String linea = p.getIdPrestamo() + SEPARADOR +
-                               p.getUsuario().getId() + SEPARADOR +
-                               p.getRecurso().getIdentificador() + SEPARADOR +
-                               p.getFechaPrestamo() + SEPARADOR +
-                               fDevolucion + SEPARADOR +
+                String fechaDev = (p.getFechaDevolucion() != null) ? p.getFechaDevolucion().toString() : "null";
+                String linea = p.getIdPrestamo() + SEPARADOR + 
+                               p.getUsuario().getId() + SEPARADOR + 
+                               p.getRecurso().getIdentificador() + SEPARADOR + 
+                               p.getFechaPrestamo() + SEPARADOR + 
+                               fechaDev + SEPARADOR + 
                                p.isActivo();
                 bw.write(linea);
                 bw.newLine();
