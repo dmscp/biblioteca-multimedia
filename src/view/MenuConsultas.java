@@ -14,13 +14,13 @@ public class MenuConsultas {
         do {
             System.out.println("\n--- MÓDULO DE BÚSQUEDAS Y CONSULTAS ---");
             System.out.println("1. Histórico completo de préstamos");
-            System.out.println("2. Listar préstamos ACTIVOS");
+            System.out.println("2. Listar préstamos activos");
             System.out.println("3. Buscar préstamos por título de recurso");
             System.out.println("4. Ver préstamos de un usuario");
             System.out.println("5. Filtrar catálogo por disponibilidad");
-            System.out.println("6. Filtrar catálogo por TIPO");
-            System.out.println("7. Buscar recursos por año (Extra 1)");
-            System.out.println("8. Ver préstamos DEVUELTOS (Extra 2)");
+            System.out.println("6. Filtrar catálogo por tipo");
+            System.out.println("7. Buscar recursos por año");
+            System.out.println("8. Ver préstamos devueltos");
             System.out.println("9. Volver al Menú Principal");
             System.out.print("Selecciona una opción: ");
 
@@ -35,25 +35,34 @@ public class MenuConsultas {
                         mostrar(gestor.buscarPrestamosPorTitulo(scanner.nextLine()));
                         break;
                     case 4:
-                        System.out.print("ID del usuario (UUID): ");
+                        System.out.print("ID del usuario: ");
                         mostrar(gestor.obtenerPrestamosDeUsuario(scanner.nextLine()));
                         break;
                     case 5:
-                        System.out.print("1. DISPONIBLES | 2. PRESTADOS: ");
+                        System.out.print("1. Disponibles | 2. Prestados: ");
                         int est = Integer.parseInt(scanner.nextLine());
                         for (Recurso r : gestor.obtenerRecursosPorEstado(est == 1)) System.out.println(r);
                         break;
                     case 6:
-                        System.out.print("Tipo (LIBRO, PELICULA, VIDEOJUEGO): ");
-                        String tipo = scanner.nextLine().trim().toUpperCase();
+                        System.out.println("¿Qué tipo de recurso deseas filtrar? (1. Libro | 2. Película | 3. Videojuego)");
+                        int tipoSeleccionado = Integer.parseInt(scanner.nextLine());
+                        System.out.println("\n=== RECURSOS FILTRADOS POR TIPO ===");
                         int tCount = 0;
                         for (Recurso r : gestor.obtenerRecursosPorEstado(true)) {
-                            if (check(r, tipo)) { System.out.println(r); tCount++; }
+                            if (check(r, tipoSeleccionado)) { 
+                                System.out.println(r); 
+                                tCount++; 
+                            }
                         }
                         for (Recurso r : gestor.obtenerRecursosPorEstado(false)) {
-                            if (check(r, tipo)) { System.out.println(r); tCount++; }
+                            if (check(r, tipoSeleccionado)) { 
+                                System.out.println(r); 
+                                tCount++; 
+                            }
                         }
-                        if (tCount == 0) System.out.println("No hay recursos coincidentes.");
+                        if (tCount == 0) {
+                            System.out.println("No hay recursos registrados de ese tipo.");
+                        }
                         break;
                     case 7:
                         System.out.print("Año: ");
@@ -89,9 +98,10 @@ public class MenuConsultas {
         else { for (Prestamo p : lista) System.out.println(p); }
     }
 
-    private static boolean check(Recurso r, String t) {
-        return (t.equals("LIBRO") && r instanceof Libro) ||
-               (t.equals("PELICULA") && r instanceof Pelicula) ||
-               (t.equals("VIDEOJUEGO") && r instanceof Videojuego);
+    private static boolean check(Recurso r, int t) {
+        return (t == 1 && r instanceof Libro) ||
+               (t == 2 && r instanceof Pelicula) ||
+               (t == 3 && r instanceof Videojuego);
     }
+
 }

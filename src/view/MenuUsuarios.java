@@ -13,12 +13,12 @@ public class MenuUsuarios {
 
         do {
             System.out.println("\n--- GESTIÓN DE USUARIOS ---");
-            System.out.println("1. Registrar Usuario");
-            System.out.println("2. Listar Usuarios");
-            System.out.println("3. Buscar Usuario por ID");
-            System.out.println("4. Modificar Usuario");
-            System.out.println("5. Eliminar Usuario");
-            System.out.println("6. Volver al Menú Principal");
+            System.out.println("1. Registrar usuario");
+            System.out.println("2. Listar usuarios");
+            System.out.println("3. Buscar usuario por ID");
+            System.out.println("4. Modificar usuario");
+            System.out.println("5. Eliminar usuario");
+            System.out.println("6. Volver al menú principal");
             System.out.print("Selecciona una opción: ");
             
             try {
@@ -26,12 +26,12 @@ public class MenuUsuarios {
                 
                 switch (opcion) {
                     case 1:
-                        System.out.print("Introduce Nombre: ");
+                        System.out.print("Introduce nombre: ");
                         String nombre = scanner.nextLine();
-                        System.out.print("Introduce Correo: ");
+                        System.out.print("Introduce correo: ");
                         String correo = scanner.nextLine();
                         gestor.crearUsuario(new Usuario(nombre, correo));
-                        System.out.println("✅ Usuario creado con éxito.");
+                        System.out.println("Usuario creado con éxito.");
                         break;
                     case 2:
                         gestor.listarUsuarios();
@@ -39,32 +39,32 @@ public class MenuUsuarios {
                     case 3:
                         System.out.print("Introduce el ID a buscar: ");
                         String idBuscar = scanner.nextLine();
-                        System.out.println("🔍 Usuario encontrado -> " + gestor.buscarUsuarioPorId(idBuscar));
+                        System.out.println("Usuario encontrado -> " + gestor.buscarUsuarioPorId(idBuscar));
                         break;
                     case 4:
                         System.out.print("Introduce el ID del usuario a modificar: ");
                         String idMod = scanner.nextLine();
-                        System.out.print("Nuevo Nombre: ");
+                        System.out.print("Nuevo nombre: ");
                         String nNombre = scanner.nextLine();
-                        System.out.print("Nuevo Correo: ");
+                        System.out.print("Nuevo correo: ");
                         String nCorreo = scanner.nextLine();
                         gestor.modificarUsuario(idMod, nNombre, nCorreo);
-                        System.out.println("✅ Usuario modificado con éxito.");
+                        System.out.println("Usuario modificado con éxito.");
                         break;
                     case 5:
                         System.out.print("Introduce el ID del usuario a eliminar: ");
                         String idEli = scanner.nextLine();
                         gestor.eliminarUsuario(idEli);
-                        System.out.println("❌ Usuario eliminado con éxito.");
+                        System.out.println("Usuario eliminado con éxito.");
                         break;
                     case 6:
                         System.out.println("Volviendo al menú principal...");
                         break;
                     default:
-                        System.out.println("⚠️ Opción no válida.");
+                        System.out.println("Opción no válida.");
                 }
             } catch (NumberFormatException e) {
-                System.out.println("⚠️ Error: Por favor, introduce un número válido.");
+                System.out.println("Error: Por favor, introduce un número válido.");
             } catch (UsuarioDuplicadoException | UsuarioNoEncontradoException e) {
                 System.out.println(e.getMessage());
             }
