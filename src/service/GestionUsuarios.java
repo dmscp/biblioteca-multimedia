@@ -68,7 +68,6 @@ public class GestionUsuarios {
                 throw new UsuarioDuplicadoException("Error: No se puede actualizar. El correo '" + nuevoCorreo + "' ya está en uso por otro usuario.");
             }
         }
-        
         usuario.setNombre(nuevoNombre);
         usuario.setCorreoElectronico(nuevoCorreo);
     }

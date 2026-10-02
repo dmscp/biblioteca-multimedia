@@ -118,7 +118,7 @@ public class GestionPrestamos {
         this.prestamos = prestamos;
     }
     
-    //CONSUTLA ADICIONAL 2: Obtener historial de préstamos devueltos
+    //CONSUTLA ADICIONAL: Obtener historial de préstamos devueltos
     public List<Prestamo> obtenerPrestamosDevueltos() {
         List<Prestamo> devueltos = new ArrayList<>();
         for (Prestamo p : prestamos) {

@@ -155,10 +155,6 @@ public class PersistenciaCSV {
         }
     }
 
-    public static List<Prestamo> cargarPrestamos() {
-        return new ArrayList<>();
-    }
-
     public static List<Prestamo> cargarPrestamos(List<Usuario> usuarios, List<Recurso> recursos) {
         List<Prestamo> prestamos = new ArrayList<>();
         File file = new File(ARCHIVO_PRESTAMOS);
@@ -177,13 +173,21 @@ public class PersistenciaCSV {
                 String strFechaDev = datos[4];
                 boolean activo = Boolean.parseBoolean(datos[5]);
 
-                Usuario usuarioObj = usuarios.stream()
-                        .filter(u -> u.getId().equalsIgnoreCase(idUsuario))
-                        .findFirst().orElse(null);
+                Usuario usuarioObj = null;
+                for (Usuario u : usuarios) {
+                    if (u.getId().equalsIgnoreCase(idUsuario)) {
+                        usuarioObj = u;
+                        break;
+                    }
+                }
 
-                Recurso recursoObj = recursos.stream()
-                        .filter(r -> r.getIdentificador().equalsIgnoreCase(idRecurso))
-                        .findFirst().orElse(null);
+                Recurso recursoObj = null;
+                for (Recurso r : recursos) {
+                    if (r.getIdentificador().equalsIgnoreCase(idRecurso)) {
+                        recursoObj = r;
+                        break;
+                    }
+                }
 
                 if (usuarioObj != null && recursoObj != null) {
                     Prestamo p = new Prestamo(idPrestamo, usuarioObj, recursoObj);
